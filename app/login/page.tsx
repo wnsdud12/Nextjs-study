@@ -1,5 +1,3 @@
-"use client";
-
 import SigninForm from "../ui/signin-form";
 
 const Login = () => {

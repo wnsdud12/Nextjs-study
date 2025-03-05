@@ -8,7 +8,8 @@ const createToken = async (id: number, email: string) => {
   const token = jwt.sign({ userId: id, email: email }, SECRET_KEY, {
     expiresIn: "1h",
   });
-
+  console.log("token : ", token);
+  
   const cookieStore = await cookies();
   cookieStore.set({
     name: "token",
@@ -16,6 +17,9 @@ const createToken = async (id: number, email: string) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
+    path: "/",
   });
+  console.log(cookieStore.get("token"));
+  
 };
 export default createToken;

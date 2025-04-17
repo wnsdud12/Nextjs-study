@@ -53,5 +53,5 @@ export async function signin(state: SigninFormState, formData: FormData) {
   // 4. Create user session
   await createToken(user.id, user.email);
   // 5. Redirect user
-  redirect("/dashboard");
+  redirect("/home");
 }

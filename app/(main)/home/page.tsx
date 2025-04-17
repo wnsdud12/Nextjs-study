@@ -22,12 +22,11 @@ const Home = () => {
   }, []);
 
   const fetchNotices = async () => {
-    console.log("begin fetchNotices");
-
     const res = await fetch("/api/notice");
     const data = await res.json();
-
-    if (!res.ok) {
+    console.log("fetchNotices", data);
+    
+    if (data.code !== 200) {
       alert(data.message || "Failed to fetch notices");
     } else {
       setNotices(data.data?.notices || []);
@@ -47,13 +46,17 @@ const Home = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-              <DialogTitle>공지 작성</DialogTitle>
+                <DialogTitle>공지 작성</DialogTitle>
               </DialogHeader>
               <NoticeForm
                 onSuccess={() => {
                   console.log("onSuccess");
                   fetchNotices(); // ✅ 리스트 갱신
                   setOpen(false); // ✅ 모달 닫기
+                }}
+                onError={(error) => {
+                  console.error("onError", error);
+                  alert(error); // ✅ 에러 메시지 출력
                 }}
               />
             </DialogContent>

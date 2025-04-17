@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
       message: "Unauthorized",
       code: 401,
       data: {},
-    });
+    }, { status: 401 });
   }
 
   const body = await req.json();
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       message: "Missing title or content",
       code: 400,
       data: {},
-    });
+    }, { status: 400 });
   }
 
   const newNotice = {

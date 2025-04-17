@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import axiosInstance from "@/lib/axiosInsstance";
 
 const Home = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
@@ -22,16 +23,20 @@ const Home = () => {
   }, []);
 
   const fetchNotices = async () => {
-    const res = await fetch("/api/notice");
-    const data = await res.json();
-    console.log("fetchNotices", data);
-    
-    if (data.code !== 200) {
-      console.log("Failed to fetch notices", data);
-      
-      alert(data.message || "Failed to fetch notices");
-    } else {
-      setNotices(data.data?.notices || []);
+    try {
+      const res = await axiosInstance.get("/api/notice");
+      const data = res.data;
+      console.log("fetchNotices", data);
+
+      if (data.code !== 200) {
+        console.log("Failed to fetch notices", data);
+        alert(data.message || "Failed to fetch notices");
+      } else {
+        setNotices(data.data?.notices || []);
+      }
+    } catch (error) {
+      console.error("Error fetching notices", error);
+      alert("An error occurred while fetching notices.");
     }
   };
 
@@ -58,7 +63,7 @@ const Home = () => {
                 }}
                 onError={(error) => {
                   console.error("onError", error);
-                  alert(error); // ✅ 에러 메시지 출력
+                  // alert(error); // ✅ 에러 메시지 출력
                 }}
               />
             </DialogContent>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import axiosInstance from "@/lib/axiosInsstance";
 
 export default function NoticeForm({
   onSuccess,
@@ -12,22 +13,25 @@ export default function NoticeForm({
   const [content, setContent] = useState("");
 
   const handleSubmit = async () => {
-    const res = await fetch("/api/notice", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content }),
-    });
+    try {
+      const res = await axiosInstance.post("/api/notice", { title, content });
 
-    const data = await res.json();
-    console.log("Response:", data);
-    
-    if (data.code === 200) {
-      if (onSuccess) {
-        onSuccess();
+      const data = res.data;
+      console.log("Response:", data);
+
+      if (data.code === 200) {
+        if (onSuccess) {
+          onSuccess();
+        }
+      } else {
+        if (onError) {
+          onError(data.message || "Failed to create notice");
+        }
       }
-    } else {
+    } catch (error) {
+      console.error("Error creating notice:", error);
       if (onError) {
-        onError(data.message || "Failed to create notice");
+        onError("An error occurred while creating the notice.");
       }
     }
   };

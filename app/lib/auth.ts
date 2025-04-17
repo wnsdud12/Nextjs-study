@@ -1,6 +1,7 @@
 // app/lib/auth.ts
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { JWT_SECRET_KEY } from "./constant";
 
 export async function getUserFromToken(): Promise<
   | {
@@ -19,7 +20,7 @@ export async function getUserFromToken(): Promise<
   try {
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET || "default_secret"
+      JWT_SECRET_KEY
     ) as {
       userId: number;
       email: string;

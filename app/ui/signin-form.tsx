@@ -5,12 +5,15 @@ import { Card } from "@/components/ui/card";
 import React, { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import SigninInput from "./signin-input";
+import { useRouter } from "next/navigation";
+import axiosInstance from "@/lib/axiosInsstance";
 
 const SigninForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   // 클라이언트 로그인 요청 (로그인 함수)
   const login = async () => {
@@ -18,26 +21,34 @@ const SigninForm = () => {
     setError(null);
 
     try {
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await axiosInstance.post(
+        "/api/auth/signin",
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      const data = await res.json();
+      const data = res.data;
 
-      if (res.ok) {
+      if (res.status === 200) {
         // 로그인 성공 시 Access Token을 클라이언트에 저장
-        localStorage.setItem("accessToken", data.accessToken);
+        console.log(res);
+        
+        const newToken = res.headers["authorization"];
+        localStorage.setItem("refreshToken", newToken.replace("Bearer ", ""));
         // 리디렉션 또는 기타 후속 처리를 여기에 추가
-        window.location.href = "/home";
+        router.replace("/home");
       } else {
         setError(data.message || "Login failed");
       }
-    } catch (error) {
-      setError("An error occurred. Please try again.");
+    } catch (error: any) {
+      console.error(error);
+      setError(
+        error.response?.data?.message || "An error occurred. Please try again."
+      );
     } finally {
       setPending(false);
     }

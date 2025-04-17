@@ -2,11 +2,11 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
+import { JWT_SECRET_KEY } from "@/app/lib/constant";
 
 export async function GET() {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
-  const SECRET_KEY = process.env.JWT_SECRET || "default_secret";
 
   if (!token) {
     return NextResponse.json(
@@ -16,7 +16,7 @@ export async function GET() {
   }
 
   try {
-    const decoded = jwt.verify(token, SECRET_KEY) as { email: string; userId: number };
+    const decoded = jwt.verify(token, JWT_SECRET_KEY) as { email: string; userId: number };
     return NextResponse.json({
       message: "success",
       code: 200,

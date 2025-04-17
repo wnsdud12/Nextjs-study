@@ -13,8 +13,11 @@ const notices: Notice[] = []; // 메모리 저장용
 
 // GET - 공지 목록 조회
 export async function GET() {
+  console.log("GET /api/notice");
+  
   const user = await getUserFromToken();
-
+  console.log("user", user);
+  
   if (!user) {
     return NextResponse.json({
       message: "Unauthorized",

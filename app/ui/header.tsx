@@ -28,12 +28,20 @@ const Header = () => {
   const handleLogout = async () => {
     const res = await fetch("/api/auth/logout", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-
+  
+    const data = await res.json();
+  
     if (res.ok) {
-      router.push("/");  // 로그아웃 후 로그인 페이지로 리디렉션
+      // Access Token 삭제
+      localStorage.removeItem("accessToken");
+      // 로그아웃 후 리디렉션
+      window.location.href = "/";
     } else {
-      alert("로그아웃 실패");
+      alert(data.message || "Logout failed");
     }
   };
 

@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get("accessToken")?.value;
   const SECRET_KEY = process.env.JWT_SECRET || "default_secret";
 
   if (!token) {

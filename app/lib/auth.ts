@@ -11,7 +11,9 @@ export async function getUserFromToken(): Promise<
   | undefined
 > {
   const cookieStore = await cookies(); // ✅ async로 변경
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get("accessToken")?.value;
+  console.log("token", token);
+  
   if (!token) return null;
 
   try {

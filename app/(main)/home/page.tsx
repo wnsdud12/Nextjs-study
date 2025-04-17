@@ -27,6 +27,8 @@ const Home = () => {
     console.log("fetchNotices", data);
     
     if (data.code !== 200) {
+      console.log("Failed to fetch notices", data);
+      
       alert(data.message || "Failed to fetch notices");
     } else {
       setNotices(data.data?.notices || []);

@@ -39,8 +39,8 @@ const Header = () => {
       );
 
       if (res.status === 200) {
-        // Access Token 삭제
-        localStorage.removeItem("accessToken");
+        // refresh Token 삭제
+        localStorage.removeItem("refreshToken");
         // 로그아웃 후 리디렉션
         window.location.href = "/";
       } else {

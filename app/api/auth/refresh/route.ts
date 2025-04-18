@@ -7,6 +7,12 @@ export async function POST(request: Request) {
   const body = await request.json();
   const refreshToken = body.refreshToken;
 
+  if (!refreshToken) {
+    return NextResponse.json(
+      { message: "Refresh token is required" },
+      { status: 401 }
+    );
+  }
   try {
     const decoded = jwt.verify(refreshToken, JWT_SECRET_KEY) as {
       userId: number;

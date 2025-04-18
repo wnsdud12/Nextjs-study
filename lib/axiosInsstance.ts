@@ -14,6 +14,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const refreshToken = localStorage.getItem("refreshToken")
     console.log("originalRequest._retry: ", originalRequest._retry);
     
     // accessToken이 만료되어 401이 발생한 경우
@@ -25,7 +26,7 @@ axiosInstance.interceptors.response.use(
         const res = await axiosInstance.post(
           "/api/auth/refresh",
           {
-            refreshToken: localStorage.getItem("refreshToken"),
+            refreshToken,
           },
         );
         console.log("res: ", res);

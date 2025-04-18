@@ -7,7 +7,6 @@ export async function POST() {
   
   // 쿠키 삭제
   cookieStore.delete("accessToken");
-
   return NextResponse.json({
     message: "Logged out successfully",
     code: 200,

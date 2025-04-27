@@ -30,13 +30,13 @@ const Home = () => {
 
       if (data.code !== 200) {
         console.log("Failed to fetch notices", data);
-        alert(data.message || "Failed to fetch notices");
+        // alert(data.message || "Failed to fetch notices");
       } else {
         setNotices(data.data?.notices || []);
       }
     } catch (error) {
       console.error("Error fetching notices", error);
-      alert("An error occurred while fetching notices.");
+      // alert("An error occurred while fetching notices.");
     }
   };
 

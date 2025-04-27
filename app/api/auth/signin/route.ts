@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
 import signinSchema from "@/schema/auth/signinSchema";
 import { JWT_EXPIRES_IN, JWT_REFRESH_EXPIRES_IN, JWT_SECRET_KEY } from "@/app/lib/constant";
+import { createResponse } from "../../lib/response";
 
 // 로그인 성공 시 토큰 생성
 export async function POST(req: NextRequest) {
@@ -13,10 +14,7 @@ export async function POST(req: NextRequest) {
     password,
   });
   if (!validatedFields.success) {
-    return NextResponse.json(
-      { message: "아이디 또는 비밀번호가 일치하지 않습니다." },
-      { status: 400 }
-    );
+    return createResponse(null, "아이디 또는 비밀번호가 일치하지 않습니다.", 400);
   }
   // 사용자 인증 로직
   const data = [{ id: 1, email: "qwe", password: "qwe" }]; // 예시 데이터
@@ -43,7 +41,7 @@ export async function POST(req: NextRequest) {
     );
 
     // 3. httpOnly 쿠키에 accessToken 저장
-    const response = NextResponse.json({ message: "Login successful" });
+    const response = createResponse();
     response.cookies.set("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -59,5 +57,5 @@ export async function POST(req: NextRequest) {
     return response;
   }
 
-  return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
+  return createResponse(null, "아이디 또는 비밀번호가 일치하지 않습니다.", 400);
 }

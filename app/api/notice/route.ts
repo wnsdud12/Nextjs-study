@@ -1,6 +1,7 @@
 // app/api/notice/route.ts
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getUserFromToken } from "@/app/lib/auth";
+import { createResponse } from "../lib/response";
 
 export type Notice = {
   id: number;
@@ -19,20 +20,9 @@ export async function GET() {
   console.log("user", user);
   
   if (!user) {
-    return NextResponse.json({
-      message: "Unauthorized",
-      code: 401,
-      data: {},
-    });
+    return createResponse({}, "토큰이 만료되었습니다.", 401);
   }
-
-  return NextResponse.json({
-    message: "success",
-    code: 200,
-    data: {
-      notices,
-    },
-  });
+  return createResponse({ notices })
 }
 
 // POST - 공지 작성
@@ -40,22 +30,17 @@ export async function POST(req: NextRequest) {
   const user = await getUserFromToken();
 
   if (!user) {
-    return NextResponse.json({
-      message: "Unauthorized",
-      code: 401,
-      data: {},
-    }, { status: 401 });
+    return createResponse({}, "토큰이 만료되었습니다.", 401);
   }
 
   const body = await req.json();
   const { title, content } = body;
 
-  if (!title || !content) {
-    return NextResponse.json({
-      message: "Missing title or content",
-      code: 400,
-      data: {},
-    }, { status: 400 });
+  if (!title) {
+    return createResponse({}, "제목을 입력해주세요.", 400);
+  }
+  if (!content) {
+    return createResponse({}, "내용을 입력해주세요.", 400);
   }
 
   const newNotice = {
@@ -66,12 +51,5 @@ export async function POST(req: NextRequest) {
   };
 
   notices.push(newNotice);
-
-  return NextResponse.json({
-    message: "success",
-    code: 200,
-    data: {
-      notice: newNotice,
-    },
-  });
+  return createResponse({ notice: newNotice });
 }

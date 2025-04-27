@@ -8,7 +8,7 @@ export async function POST(request: Request) {
   const refreshToken = body.refreshToken;
 
   if (!refreshToken) {
-    createResponse(null, "토큰이 만료되었습니다.", 401)
+    createResponse({}, "토큰이 만료되었습니다.", 401)
   }
   try {
     const decoded = jwt.verify(refreshToken, JWT_SECRET_KEY) as {
@@ -34,6 +34,6 @@ export async function POST(request: Request) {
     return createResponse();
   } catch (err) {
     console.error("Invalid refresh token:", err);
-    return createResponse(null, "토큰이 만료되었습니다.", 401);
+    return createResponse({}, "토큰이 만료되었습니다.", 401);
   }
 }

@@ -9,17 +9,17 @@ export async function GET() {
   const token = cookieStore.get("accessToken")?.value;
 
   if (!token) {
-    return createResponse(null, "토큰이 만료되었습니다.", 401);
+    return createResponse({}, "토큰이 만료되었습니다.", 401);
   }
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET_KEY) as { email: string; userId: number };
     if (!decoded) {
-      return createResponse(null, "토큰이 만료되었습니다.", 401);
+      return createResponse({}, "토큰이 만료되었습니다.", 401);
     }
     return createResponse({ email: decoded.email });
   } catch (err) {
     console.error("Invalid token:", err);
-    return createResponse(null, "토큰이 만료되었습니다.", 401);
+    return createResponse({}, "토큰이 만료되었습니다.", 401);
   }
 }

@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     password,
   });
   if (!validatedFields.success) {
-    return createResponse(null, "아이디 또는 비밀번호가 일치하지 않습니다.", 400);
+    return createResponse({}, "아이디 또는 비밀번호가 일치하지 않습니다.", 400);
   }
   // 사용자 인증 로직
   const data = [{ id: 1, email: "qwe", password: "qwe" }]; // 예시 데이터
@@ -57,5 +57,5 @@ export async function POST(req: NextRequest) {
     return response;
   }
 
-  return createResponse(null, "아이디 또는 비밀번호가 일치하지 않습니다.", 400);
+  return createResponse({}, "아이디 또는 비밀번호가 일치하지 않습니다.", 400);
 }

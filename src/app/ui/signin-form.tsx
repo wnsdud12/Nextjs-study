@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import React, { useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import SigninInput from "./signin-input";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInsstance";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@radix-ui/react-checkbox";
 
 const SigninForm = () => {
   const [email, setEmail] = useState("");
@@ -71,6 +71,7 @@ const SigninForm = () => {
         style={{ width: "575px" }}
       >
         <SigninInput
+          type="text"
           placeholder="E-mail을 입력해 주세요."
           label="ID"
           name="email"

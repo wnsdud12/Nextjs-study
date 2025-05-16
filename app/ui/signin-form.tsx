@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import SigninInput from "./signin-input";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInsstance";
+import axios from "axios";
 
 const SigninForm = () => {
   const [email, setEmail] = useState("");
@@ -44,11 +45,15 @@ const SigninForm = () => {
       } else {
         setError(data.message || "Login failed");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      setError(
-        error.response?.data?.message || "An error occurred. Please try again."
-      );
+      if (axios.isAxiosError(error)) {
+        setError(
+          error.response?.data?.message || "An error occurred. Please try again."
+        );
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setPending(false);
     }

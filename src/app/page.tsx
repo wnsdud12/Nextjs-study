@@ -1,4 +1,4 @@
-import SigninForm from "./ui/signin-form";
+import SigninForm from "./login/components/signin-form";
 
 export default function Home() {
   return (

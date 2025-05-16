@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import SigninInput from "./signin-input";
+import SigninInputContainer from "./signin-input-container";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInsstance";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Checkbox } from "@radix-ui/react-checkbox";
 
 const SigninForm = () => {
@@ -66,11 +65,10 @@ const SigninForm = () => {
         login();
       }}
     >
-      <Card
-        className="gap-5 border-none shadow-none"
-        style={{ width: "575px" }}
+      <div
+        className="flex flex-col pc-w-575 pc-g-20 border-none shadow-none"
       >
-        <SigninInput
+        <SigninInputContainer
           type="text"
           placeholder="E-mail을 입력해 주세요."
           label="ID"
@@ -78,7 +76,7 @@ const SigninForm = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <SigninInput
+        <SigninInputContainer
           type="password"
           placeholder="비밀번호를 입력해 주세요."
           label="PW"
@@ -93,7 +91,7 @@ const SigninForm = () => {
         <Button aria-disabled={pending} type="submit">
           로그인
         </Button>
-      </Card>
+      </div>
 
       {error && (
         <div className="text-red-500 mt-2">

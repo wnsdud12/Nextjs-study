@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInsstance";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const SigninForm = () => {
   const [email, setEmail] = useState("");
@@ -86,7 +86,7 @@ const SigninForm = () => {
         />
         <div className="flex items-center space-x-2">
           <Checkbox id="saveEmail" />
-          <label htmlFor="saveEmail">아이디 기억하기</label>
+          <label htmlFor="saveEmail">자동 로그인</label>
         </div>
         <Button aria-disabled={pending} type="submit">
           로그인

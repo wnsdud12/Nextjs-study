@@ -109,7 +109,7 @@ const config = {
               },
             }),
           },
-          { values, layer: "utilities" }
+          { values }
         );
 
         // vw-w-sm-400
@@ -121,7 +121,7 @@ const config = {
               },
             }),
           },
-          { values, layer: "utilities" }
+          { values }
         );
       }
     }),

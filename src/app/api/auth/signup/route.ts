@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createResponse } from "../../lib/response";
 import { z } from "zod";
-import { PrismaClient } from "@/generated/prisma/client";
-
-
-const prisma = new PrismaClient();
+import prisma from "@/app/lib/prisma";
+import { User } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -19,13 +17,13 @@ export async function POST(req: NextRequest) {
 
   if (!validation.success) {
     const errors = validation.error.flatten();
-    console.log(errors.fieldErrors);
+    console.error(errors.fieldErrors);
 
     return createResponse({}, "회원가입에 실패했습니다.", 400);
   }
 
   try {
-    const existingUser = await prisma.user.findUnique({
+    const existingUser: User | null = await prisma.user.findUnique({
       where: { email },
     });
 
@@ -33,7 +31,7 @@ export async function POST(req: NextRequest) {
       return createResponse({}, "이미 존재하는 회원입니다.", 400);
     }
 
-    const newUser = await prisma.user.create({
+    const newUser: User | null = await prisma.user.create({
       data: { email, password, name },
     });
 

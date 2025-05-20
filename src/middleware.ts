@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken"
 import { JWT_SECRET_KEY } from "@/app/lib/constant"
 
 export function middleware(req: NextRequest) {
-  console.log("begin middleware");
   
   const token = req.cookies.get("accessToken")?.value
 

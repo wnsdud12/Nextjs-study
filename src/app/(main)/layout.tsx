@@ -1,4 +1,5 @@
 import Header from "../ui/header";
+import LNB from "../ui/lnb";
 
 export default function MainLayout({
   children,
@@ -8,7 +9,10 @@ export default function MainLayout({
   return (
     <div>
       <Header />
-      {children}
+      <div className="flex">
+        <LNB />
+        {children}
+      </div>
     </div>
   );
 }

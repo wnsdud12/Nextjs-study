@@ -20,10 +20,9 @@ const Home = () => {
     try {
       const res = await axiosInstance.get("/api/notice");
       const data = res.data;
-      console.log("fetchNotices", data);
 
       if (data.code !== 200) {
-        console.log("Failed to fetch notices", data);
+        console.error("Failed to fetch notices", data);
         // alert(data.message || "Failed to fetch notices");
       } else {
         setNotices(data.data?.notices || []);
@@ -51,7 +50,6 @@ const Home = () => {
               </DialogHeader>
               <NoticeForm
                 onSuccess={() => {
-                  console.log("onSuccess");
                   fetchNotices(); // ✅ 리스트 갱신
                   setOpen(false); // ✅ 모달 닫기
                 }}

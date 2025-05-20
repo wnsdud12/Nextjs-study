@@ -7,11 +7,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="w-screen h-screen flex flex-col">
       <Header />
-      <div className="flex">
+      <div className="flex w-full h-full">
         <LNB />
-        {children}
+        <div className="w-full h-full">{children}</div>
       </div>
     </div>
   );

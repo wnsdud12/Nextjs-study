@@ -77,6 +77,8 @@ const config = {
       const keys = {
         w: "width",
         h: "height",
+        "min-w": "min-width",
+        "min-h": "min-height",
         l: "left",
         r: "right",
         t: "top",

@@ -28,7 +28,7 @@ const SigninForm = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       const data = res.data;
@@ -36,7 +36,7 @@ const SigninForm = () => {
       if (res.status === 200) {
         // 로그인 성공 시 Access Token을 클라이언트에 저장
         console.log(res);
-        
+
         const newToken = res.headers["authorization"];
         localStorage.setItem("refreshToken", newToken.replace("Bearer ", ""));
         // 리디렉션 또는 기타 후속 처리를 여기에 추가
@@ -48,7 +48,8 @@ const SigninForm = () => {
       console.error(error);
       if (axios.isAxiosError(error)) {
         setError(
-          error.response?.data?.message || "An error occurred. Please try again."
+          error.response?.data?.message ||
+            "An error occurred. Please try again.",
         );
       } else {
         setError("An unexpected error occurred. Please try again.");
@@ -65,9 +66,7 @@ const SigninForm = () => {
         login();
       }}
     >
-      <div
-        className="flex flex-col pc-w-575 pc-g-20 border-none shadow-none"
-      >
+      <div className="pc-w-575 pc-g-20 flex flex-col border-none shadow-none">
         <SigninInputContainer
           type="text"
           placeholder="E-mail을 입력해 주세요."
@@ -94,7 +93,7 @@ const SigninForm = () => {
       </div>
 
       {error && (
-        <div className="text-red-500 mt-2">
+        <div className="mt-2 text-red-500">
           {error} {/* 오류 메시지 표시 */}
         </div>
       )}

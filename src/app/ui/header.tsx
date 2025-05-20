@@ -1,9 +1,9 @@
 "use client";
-import { Button } from "@/src/components/ui/button";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axiosInsstance";
+import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [email, setEmail] = useState<string | null>(null);

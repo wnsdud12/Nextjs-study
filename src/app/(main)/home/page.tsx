@@ -4,15 +4,9 @@ import { useEffect, useState } from "react";
 import { Notice } from "@/app/api/notice/route";
 import NoticeForm from "@/app/ui/NoticeForm";
 import NoticeList from "@/app/ui/NoticeList";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/src/components/ui/dialog";
-import { Button } from "@/src/components/ui/button";
 import axiosInstance from "@/lib/axiosInsstance";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const Home = () => {
   const [notices, setNotices] = useState<Notice[]>([]);

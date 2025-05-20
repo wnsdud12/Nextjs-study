@@ -1,7 +1,5 @@
 // app/api/notice/route.ts
-import { NextRequest } from "next/server";
-import { getUserFromToken } from "@/app/lib/auth";
-import { createResponse } from "../lib/response";
+import { createResponse, withAuth } from "@/app/api/lib";
 
 export type Notice = {
   id: number;
@@ -13,24 +11,12 @@ export type Notice = {
 const notices: Notice[] = []; // 메모리 저장용
 
 // GET - 공지 목록 조회
-export async function GET() {
-  
-  const user = await getUserFromToken();
-  
-  if (!user) {
-    return createResponse({}, "토큰이 만료되었습니다.", 401);
-  }
-  return createResponse({ notices })
-}
+export const GET = withAuth(async () => {
+  return createResponse({ notices });
+});
 
 // POST - 공지 작성
-export async function POST(req: NextRequest) {
-  const user = await getUserFromToken();
-
-  if (!user) {
-    return createResponse({}, "토큰이 만료되었습니다.", 401);
-  }
-
+export const POST = withAuth(async (user, req) => {
   const body = await req.json();
   const { title, content } = body;
 
@@ -50,4 +36,4 @@ export async function POST(req: NextRequest) {
 
   notices.push(newNotice);
   return createResponse({ notice: newNotice });
-}
+});

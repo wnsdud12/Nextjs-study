@@ -1,9 +1,10 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { JWT_EXPIRES_IN, JWT_SECRET_KEY } from "@/app/lib/constant";
-import { createResponse } from "../../lib/response";
+import { createResponse } from "@/app/api/lib";
+import { NextRequest } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const body = await request.json();
   const refreshToken = body.refreshToken;
 

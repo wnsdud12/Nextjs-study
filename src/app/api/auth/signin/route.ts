@@ -5,7 +5,7 @@ import {
   JWT_REFRESH_EXPIRES_IN,
   JWT_SECRET_KEY,
 } from "@/app/lib/constant";
-import { createResponse } from "@/app/api/lib/response";
+import { createResponse } from "@/app/api/lib";
 import signinSchema from "@/schema/auth/signinSchema";
 import { User } from "@prisma/client";
 import prisma from "@/app/lib/prisma";

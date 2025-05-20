@@ -1,11 +1,11 @@
 // app/lib/auth.ts
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { JWT_SECRET_KEY } from "./constant";
-import { TokenType } from "../../../types";
+import { JWT_SECRET_KEY } from "../../../lib/constant";
+import { TokenType } from "../../../../../types";
 
 export async function getUserFromToken(): Promise<
-  TokenType | null | undefined
+  TokenType | null
 > {
   const cookieStore = await cookies(); // ✅ async로 변경
   const token = cookieStore.get("accessToken")?.value;
